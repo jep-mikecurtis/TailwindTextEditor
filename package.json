@@ -16,10 +16,10 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jep-capital-devs/TailwindTextEditor.git"
+    "url": "git+https://github.com/jep-mikecurtis/TailwindTextEditor.git"
   },
   "bugs": {
-    "url": "https://github.com/jep-capital-devs/TailwindTextEditor/issues"
+    "url": "https://github.com/jep-mikecurtis/TailwindTextEditor/issues"
   },
-  "homepage": "https://github.com/jep-capital-devs/TailwindTextEditor#readme"
+  "homepage": "https://github.com/jep-mikecurtis/TailwindTextEditor#readme"
 }
