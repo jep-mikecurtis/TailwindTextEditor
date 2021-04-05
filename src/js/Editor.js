@@ -76,3 +76,5 @@ class Editor extends Rapyd {
     this.SetBody(editor.value);
   }
 }
+
+export default Editor;
