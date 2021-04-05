@@ -37,11 +37,13 @@ class Editor extends Rapyd {
   }
 
   init() {
-    const content = `<div id="${this.target}_display" class="flex-1 ml-4"></div>
+    const content = `
+                    <div id="${this.target}_display" class="flex-1 ml-4"></div>
                       <div id="${this.target}_wrapper" class="flex-1 relative flex bg-grene-600 text-sm border border-gray-800 shdaow leading-loose">
-                        <div id="${this.target}_numbers" class="p-2 text-center bg-gray-100 border-r border-gray-800"></div>
-                        <textarea id="${this.target}_editor" class="flex-1 p-2 outline-none"></textarea>
-                      </div>`;
+                        <div id="${this.target}_numbers" class="p-2 text-center bg-gray-100 border-r border-gray-800">
+                      </div>
+                      <textarea id="${this.target}_editor" class="flex-1 p-2 outline-none"></textarea>
+                    </div>`;
 
     this.renderHtml(`#${this.target}`, content);
 
