@@ -9,5 +9,7 @@ This package is a tailwind text editor
 Then...
 
 ```
+import Editor from 'TailWindTextEditor'
 
+new Editor("app");
 ```
