@@ -19,7 +19,7 @@ In Your HTML
 In Your JS
 
 ```
-import Editor from 'TailWindTextEditor'
+import Editor from 'tailwindtexteditor'
 
 new Editor("app");
 ```
