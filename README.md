@@ -4,11 +4,11 @@ This package is a tailwind text editor
 
 # Not Official Still In Progress
 
-`npm i tailwindtexteditor --save`
-
 This Package Requires TailwindCss
 
-Then...
+Install
+
+`npm i tailwindtexteditor --save`
 
 In Your HTML
 
