@@ -1,9 +1,9 @@
 import Rapyd from "./Rapyd";
+import { mainContent } from "./html/html";
 
 class Editor extends Rapyd {
   target;
-  keyBefore = "";
-  content = "";
+  editor = null;
 
   constructor(target) {
     super();
@@ -13,33 +13,49 @@ class Editor extends Rapyd {
     this.init();
   }
 
-  checkEmit() {
-    const tags = ['p.','div.','h1.'];
-    const inArray = tags.filter(str => str.includes(this.keyBefore));
+  allowTab() {
+    this.editor.addEventListener(
+      "keydown",
+      function (e) {
+        if (e.key == "Tab") {
+          e.preventDefault();
+          var start = e.target.selectionStart;
+          var end = e.target.selectionEnd;
 
-    if(inArray) {
-      return inArray;
-    } else {
-      return false;
-    }
+          e.target.value =
+            e.target.value.substring(0, start) +
+            "\t" +
+            e.target.value.substring(end);
+          e.target.selectionStart = e.target.selectionEnd = start + 1;
+        }
+      }.bind(this)
+    );
   }
 
-  emit() {
+  handleTextarea() {
+    this.editor.addEventListener(
+      "keyup",
+      function (e) {
+        this.keyBefore = e.target.value;
+        this.content = e.target.value;
 
+        this.SetBody(this.content);
+      }.bind(this)
+    );
   }
 
   calcNumbers() {
-    var content = document
+    let content = document
       .getElementById(`${this.target}_editor`)
       .value.split("\n");
 
-    var newContent = [];
+    let newContent = [];
 
     if (content.length < 10) {
       content.length = 10;
     }
 
-    for (var i = 0; i < content.length; i++) {
+    for (let i = 0; i < content.length; i++) {
       newContent.push(`<p>${i + 1}</p>`);
     }
 
@@ -54,59 +70,19 @@ class Editor extends Rapyd {
   }
 
   init() {
-    const content = `
-                    <div id="${this.target}_display" class="flex-1 ml-4"></div>
-                      <div id="${this.target}_wrapper" class="flex-1 relative flex bg-grene-600 text-sm border border-gray-800 shdaow leading-loose">
-                        <div id="${this.target}_numbers" class="p-2 text-center bg-gray-100 border-r border-gray-800">
-                      </div>
-                      <textarea id="${this.target}_editor" class="flex-1 p-2 outline-none"></textarea>
-                    </div>`;
+    const content = mainContent(this.target);
 
     this.renderHtml(`#${this.target}`, content);
 
     this.calcNumbers();
 
-    const editor = document.getElementById(`${this.target}_editor`);
+    this.editor = document.getElementById(`${this.target}_editor`);
 
-    editor.addEventListener(
-      "keydown",
-      function (e) {
-        if (e.key == "Tab") {
-          e.preventDefault();
-          var start = e.target.selectionStart;
-          var end = e.target.selectionEnd;
+    this.allowTab();
 
-          e.target.value =
-            e.target.value.substring(0, start) +
-            "\t" +
-            e.target.value.substring(end);
+    this.handleTextarea();
 
-          let emit = this.checkEmit()
-          if (emit !== false) {
-            let emit = "<" + emit + ">" + '\n\n' + "</" + emit + ">"
-            console.log(emit);
-            document.getElementById(
-              `${this.target}_editor`
-            ).value = this.content;
-            e.target.selectionStart = e.target.selectionEnd = start + 2;
-          } else {
-            e.target.selectionStart = e.target.selectionEnd = start + 1;
-          }
-        }
-      }.bind(this)
-    );
-
-    editor.addEventListener(
-      "keyup",
-      function (e) {
-        this.keyBefore = e.target.value;
-        this.content = e.target.value;
-
-        this.SetBody(this.content);
-      }.bind(this)
-    );
-
-    this.SetBody(editor.value);
+    this.SetBody(this.editor.value);
   }
 }
 

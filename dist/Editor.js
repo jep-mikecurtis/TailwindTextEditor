@@ -177,6 +177,19 @@ var Rapyd = /*#__PURE__*/function () {
 
 var _default = Rapyd;
 exports.default = _default;
+},{}],"html/html.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mainContent = void 0;
+
+var mainContent = function mainContent(target) {
+  return "\n  <div id=\"".concat(target, "_display\" class=\"flex-1 ml-4\"></div>\n    <div id=\"").concat(target, "_wrapper\" class=\"flex-1 relative flex bg-grene-600 text-sm border border-gray-800 shdaow leading-loose\">\n      <div id=\"").concat(target, "_numbers\" class=\"p-2 text-center bg-gray-100 border-r border-gray-800\">\n    </div>\n    <textarea id=\"").concat(target, "_editor\" class=\"flex-1 p-2 outline-none\"></textarea>\n  </div>\n");
+};
+
+exports.mainContent = mainContent;
 },{}],"Editor.js":[function(require,module,exports) {
 "use strict";
 
@@ -186,6 +199,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _Rapyd2 = _interopRequireDefault(require("./Rapyd"));
+
+var _html = require("./html/html");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -227,9 +242,7 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 
     _defineProperty(_assertThisInitialized(_this), "target", void 0);
 
-    _defineProperty(_assertThisInitialized(_this), "keyBefore", "");
-
-    _defineProperty(_assertThisInitialized(_this), "content", "");
+    _defineProperty(_assertThisInitialized(_this), "editor", null);
 
     _this.target = target;
 
@@ -239,24 +252,27 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
   }
 
   _createClass(Editor, [{
-    key: "checkEmit",
-    value: function checkEmit() {
-      var _this2 = this;
-
-      var tags = ['p.', 'div.', 'h1.'];
-      var inArray = tags.filter(function (str) {
-        return str.includes(_this2.keyBefore);
-      });
-
-      if (inArray) {
-        return inArray;
-      } else {
-        return false;
-      }
+    key: "allowTab",
+    value: function allowTab() {
+      this.editor.addEventListener("keydown", function (e) {
+        if (e.key == "Tab") {
+          e.preventDefault();
+          var start = e.target.selectionStart;
+          var end = e.target.selectionEnd;
+          e.target.value = e.target.value.substring(0, start) + "\t" + e.target.value.substring(end);
+          e.target.selectionStart = e.target.selectionEnd = start + 1;
+        }
+      }.bind(this));
     }
   }, {
-    key: "emit",
-    value: function emit() {}
+    key: "handleTextarea",
+    value: function handleTextarea() {
+      this.editor.addEventListener("keyup", function (e) {
+        this.keyBefore = e.target.value;
+        this.content = e.target.value;
+        this.SetBody(this.content);
+      }.bind(this));
+    }
   }, {
     key: "calcNumbers",
     value: function calcNumbers() {
@@ -282,35 +298,13 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
   }, {
     key: "init",
     value: function init() {
-      var content = "\n                    <div id=\"".concat(this.target, "_display\" class=\"flex-1 ml-4\"></div>\n                      <div id=\"").concat(this.target, "_wrapper\" class=\"flex-1 relative flex bg-grene-600 text-sm border border-gray-800 shdaow leading-loose\">\n                        <div id=\"").concat(this.target, "_numbers\" class=\"p-2 text-center bg-gray-100 border-r border-gray-800\">\n                      </div>\n                      <textarea id=\"").concat(this.target, "_editor\" class=\"flex-1 p-2 outline-none\"></textarea>\n                    </div>");
+      var content = (0, _html.mainContent)(this.target);
       this.renderHtml("#".concat(this.target), content);
       this.calcNumbers();
-      var editor = document.getElementById("".concat(this.target, "_editor"));
-      editor.addEventListener("keydown", function (e) {
-        if (e.key == "Tab") {
-          e.preventDefault();
-          var start = e.target.selectionStart;
-          var end = e.target.selectionEnd;
-          e.target.value = e.target.value.substring(0, start) + "\t" + e.target.value.substring(end);
-          var emit = this.checkEmit();
-
-          if (emit !== false) {
-            var _emit = "<" + _emit + ">" + '\n\n' + "</" + _emit + ">";
-
-            console.log(_emit);
-            document.getElementById("".concat(this.target, "_editor")).value = this.content;
-            e.target.selectionStart = e.target.selectionEnd = start + 2;
-          } else {
-            e.target.selectionStart = e.target.selectionEnd = start + 1;
-          }
-        }
-      }.bind(this));
-      editor.addEventListener("keyup", function (e) {
-        this.keyBefore = e.target.value;
-        this.content = e.target.value;
-        this.SetBody(this.content);
-      }.bind(this));
-      this.SetBody(editor.value);
+      this.editor = document.getElementById("".concat(this.target, "_editor"));
+      this.allowTab();
+      this.handleTextarea();
+      this.SetBody(this.editor.value);
     }
   }]);
 
@@ -320,7 +314,7 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 new Editor("app");
 var _default = Editor;
 exports.default = _default;
-},{"./Rapyd":"Rapyd.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./Rapyd":"Rapyd.js","./html/html":"html/html.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -348,7 +342,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63459" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63923" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
