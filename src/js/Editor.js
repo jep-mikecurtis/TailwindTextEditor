@@ -1,12 +1,14 @@
+import "alpinejs";
 import Rapyd from "./Rapyd";
-import { mainContent } from "./html/html";
+import mainContent from "./html/html";
+import tooltip from "./helpers/tooltip";
 
 class Editor extends Rapyd {
   target;
   editor = null;
 
   constructor(target) {
-    super();
+    super({}, { ...mainContent, ...tooltip });
 
     this.target = target;
 
@@ -39,7 +41,7 @@ class Editor extends Rapyd {
         this.keyBefore = e.target.value;
         this.content = e.target.value;
 
-        this.SetBody(this.content);
+        this.setBody(this.content);
       }.bind(this)
     );
   }
@@ -51,8 +53,8 @@ class Editor extends Rapyd {
 
     let newContent = [];
 
-    if (content.length < 10) {
-      content.length = 10;
+    if (content.length < 30) {
+      content.length = 30;
     }
 
     for (let i = 0; i < content.length; i++) {
@@ -64,17 +66,25 @@ class Editor extends Rapyd {
     ).innerHTML = newContent.join("");
   }
 
-  SetBody(value) {
+  setBody(value) {
     this.renderHtml(`#${this.target}_display`, value);
     this.calcNumbers();
   }
 
+  formatText() {
+    // let string = this.editor.value;
+    // string = string.replace(/\n/g, '\n    ');
+    // this.editor.value = string
+  }
+
   init() {
-    const content = mainContent(this.target);
+    const content = this.mainContent(this.target);
 
     this.renderHtml(`#${this.target}`, content);
 
     this.calcNumbers();
+
+    this.tooltip();
 
     this.editor = document.getElementById(`${this.target}_editor`);
 
@@ -82,7 +92,7 @@ class Editor extends Rapyd {
 
     this.handleTextarea();
 
-    this.SetBody(this.editor.value);
+    this.setBody(this.editor.value);
   }
 }
 

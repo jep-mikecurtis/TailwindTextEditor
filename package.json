@@ -13,7 +13,9 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "alpinejs": "^2.8.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jep-mikecurtis/TailwindTextEditor.git"
