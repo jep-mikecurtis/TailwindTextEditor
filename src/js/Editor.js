@@ -2,6 +2,8 @@ import Rapyd from "./Rapyd";
 
 class Editor extends Rapyd {
   target;
+  keyBefore = "";
+  content = "";
 
   constructor(target) {
     super();
@@ -9,6 +11,21 @@ class Editor extends Rapyd {
     this.target = target;
 
     this.init();
+  }
+
+  checkEmit() {
+    const tags = ['p.','div.','h1.'];
+    const inArray = tags.filter(str => str.includes(this.keyBefore));
+
+    if(inArray) {
+      return inArray;
+    } else {
+      return false;
+    }
+  }
+
+  emit() {
+
   }
 
   calcNumbers() {
@@ -51,30 +68,48 @@ class Editor extends Rapyd {
 
     const editor = document.getElementById(`${this.target}_editor`);
 
-    editor.addEventListener("keydown", function (e) {
-      if (e.key == "Tab") {
-        e.preventDefault();
-        var start = e.target.selectionStart;
-        var end = e.target.selectionEnd;
+    editor.addEventListener(
+      "keydown",
+      function (e) {
+        if (e.key == "Tab") {
+          e.preventDefault();
+          var start = e.target.selectionStart;
+          var end = e.target.selectionEnd;
 
-        e.target.value =
-          e.target.value.substring(0, start) +
-          "\t" +
-          e.target.value.substring(end);
+          e.target.value =
+            e.target.value.substring(0, start) +
+            "\t" +
+            e.target.value.substring(end);
 
-        e.target.selectionStart = e.target.selectionEnd = start + 1;
-      }
-    });
+          let emit = this.checkEmit()
+          if (emit !== false) {
+            let emit = "<" + emit + ">" + '\n\n' + "</" + emit + ">"
+            console.log(emit);
+            document.getElementById(
+              `${this.target}_editor`
+            ).value = this.content;
+            e.target.selectionStart = e.target.selectionEnd = start + 2;
+          } else {
+            e.target.selectionStart = e.target.selectionEnd = start + 1;
+          }
+        }
+      }.bind(this)
+    );
 
     editor.addEventListener(
       "keyup",
       function (e) {
-        this.SetBody(e.target.value);
+        this.keyBefore = e.target.value;
+        this.content = e.target.value;
+
+        this.SetBody(this.content);
       }.bind(this)
     );
 
     this.SetBody(editor.value);
   }
 }
+
+new Editor("app");
 
 export default Editor;

@@ -1,6 +1,528 @@
-parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"pCsm":[function(require,module,exports) {
-var define;
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+parcelRequire = (function (modules, cache, entry, globalName) {
+  // Save the require from previous bundle to this closure if any
+  var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
+  var nodeRequire = typeof require === 'function' && require;
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire = typeof parcelRequire === 'function' && parcelRequire;
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error('Cannot find module \'' + name + '\'');
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = cache[name] = new newRequire.Module(name);
+
+      modules[name][0].call(module.exports, localRequire, module, module.exports, this);
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x){
+      return newRequire(localRequire.resolve(x));
+    }
+
+    function resolve(x){
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [function (require, module) {
+      module.exports = exports;
+    }, {}];
+  };
+
+  var error;
+  for (var i = 0; i < entry.length; i++) {
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
+  }
+
+  if (entry.length) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(entry[entry.length - 1]);
+
+    // CommonJS
+    if (typeof exports === "object" && typeof module !== "undefined") {
+      module.exports = mainExports;
+
+    // RequireJS
+    } else if (typeof define === "function" && define.amd) {
+     define(function () {
+       return mainExports;
+     });
+
+    // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+
+  // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
+  return newRequire;
+})({"Rapyd.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Rapyd = /*#__PURE__*/function () {
+  function Rapyd() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var methods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var init = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    _classCallCheck(this, Rapyd);
+
+    _defineProperty(this, "props", void 0);
+
+    this.props = props;
+
+    for (name in methods) {
+      this[name] = methods[name];
+    }
+
+    if (init) {
+      this.init(init);
+    }
+  }
+
+  _createClass(Rapyd, [{
+    key: "init",
+    value: function init(cb) {
+      cb = cb.bind(this);
+      cb();
+    }
+  }, {
+    key: "renderText",
+    value: function renderText(el, value) {
+      document.querySelector(el).innerText = value;
+    }
+  }, {
+    key: "renderHtml",
+    value: function renderHtml(el, value) {
+      document.querySelector(el).innerHTML = value;
+    }
+  }]);
+
+  return Rapyd;
+}();
+
+var _default = Rapyd;
+exports.default = _default;
+},{}],"Editor.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Rapyd2 = _interopRequireDefault(require("./Rapyd"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Editor = /*#__PURE__*/function (_Rapyd) {
+  _inherits(Editor, _Rapyd);
+
+  var _super = _createSuper(Editor);
+
+  function Editor(target) {
+    var _this;
+
+    _classCallCheck(this, Editor);
+
+    _this = _super.call(this);
+
+    _defineProperty(_assertThisInitialized(_this), "target", void 0);
+
+    _defineProperty(_assertThisInitialized(_this), "keyBefore", "");
+
+    _defineProperty(_assertThisInitialized(_this), "content", "");
+
+    _this.target = target;
+
+    _this.init();
+
+    return _this;
+  }
+
+  _createClass(Editor, [{
+    key: "checkEmit",
+    value: function checkEmit() {
+      var _this2 = this;
+
+      var tags = ['p.', 'div.', 'h1.'];
+      var inArray = tags.filter(function (str) {
+        return str.includes(_this2.keyBefore);
+      });
+
+      if (inArray) {
+        return inArray;
+      } else {
+        return false;
+      }
+    }
+  }, {
+    key: "emit",
+    value: function emit() {}
+  }, {
+    key: "calcNumbers",
+    value: function calcNumbers() {
+      var content = document.getElementById("".concat(this.target, "_editor")).value.split("\n");
+      var newContent = [];
+
+      if (content.length < 10) {
+        content.length = 10;
+      }
+
+      for (var i = 0; i < content.length; i++) {
+        newContent.push("<p>".concat(i + 1, "</p>"));
+      }
+
+      document.getElementById("".concat(this.target, "_numbers")).innerHTML = newContent.join("");
+    }
+  }, {
+    key: "SetBody",
+    value: function SetBody(value) {
+      this.renderHtml("#".concat(this.target, "_display"), value);
+      this.calcNumbers();
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      var content = "\n                    <div id=\"".concat(this.target, "_display\" class=\"flex-1 ml-4\"></div>\n                      <div id=\"").concat(this.target, "_wrapper\" class=\"flex-1 relative flex bg-grene-600 text-sm border border-gray-800 shdaow leading-loose\">\n                        <div id=\"").concat(this.target, "_numbers\" class=\"p-2 text-center bg-gray-100 border-r border-gray-800\">\n                      </div>\n                      <textarea id=\"").concat(this.target, "_editor\" class=\"flex-1 p-2 outline-none\"></textarea>\n                    </div>");
+      this.renderHtml("#".concat(this.target), content);
+      this.calcNumbers();
+      var editor = document.getElementById("".concat(this.target, "_editor"));
+      editor.addEventListener("keydown", function (e) {
+        if (e.key == "Tab") {
+          e.preventDefault();
+          var start = e.target.selectionStart;
+          var end = e.target.selectionEnd;
+          e.target.value = e.target.value.substring(0, start) + "\t" + e.target.value.substring(end);
+          var emit = this.checkEmit();
+
+          if (emit !== false) {
+            var _emit = "<" + _emit + ">" + '\n\n' + "</" + _emit + ">";
+
+            console.log(_emit);
+            document.getElementById("".concat(this.target, "_editor")).value = this.content;
+            e.target.selectionStart = e.target.selectionEnd = start + 2;
+          } else {
+            e.target.selectionStart = e.target.selectionEnd = start + 1;
+          }
+        }
+      }.bind(this));
+      editor.addEventListener("keyup", function (e) {
+        this.keyBefore = e.target.value;
+        this.content = e.target.value;
+        this.SetBody(this.content);
+      }.bind(this));
+      this.SetBody(editor.value);
+    }
+  }]);
+
+  return Editor;
+}(_Rapyd2.default);
+
+new Editor("app");
+var _default = Editor;
+exports.default = _default;
+},{"./Rapyd":"Rapyd.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
-var e,t=arguments[3];function n(e){return(n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}parcelRequire=function(t,r,o,i){var a,c="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function l(e,n){if(!r[e]){if(!t[e]){var o="function"==typeof parcelRequire&&parcelRequire;if(!n&&o)return o(e,!0);if(c)return c(e,!0);if(u&&"string"==typeof e)return u(e);var i=new Error("Cannot find module '"+e+"'");throw i.code="MODULE_NOT_FOUND",i}s.resolve=function(n){return t[e][1][n]||n},s.cache={};var a=r[e]=new l.Module(e);t[e][0].call(a.exports,s,a,a.exports,this)}return r[e].exports;function s(e){return l(s.resolve(e))}}l.isParcelRequire=!0,l.Module=function(e){this.id=e,this.bundle=l,this.exports={}},l.modules=t,l.cache=r,l.parent=c,l.register=function(e,n){t[e]=[function(e,t){t.exports=n},{}]};for(var s=0;s<o.length;s++)try{l(o[s])}catch(d){a||(a=d)}if(o.length){var f=l(o[o.length-1]);"object"===("undefined"==typeof exports?"undefined":n(exports))&&"undefined"!=typeof module?module.exports=f:"function"==typeof e&&e.amd&&e(function(){return f})}if(parcelRequire=l,a)throw a;return l}({"Rapyd.js":[function(e,t,n){"use strict";function r(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}Object.defineProperty(n,"__esModule",{value:!0}),n.default=void 0;var o=function(){function e(){var t,n,r,o=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},i=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},a=arguments.length>2&&void 0!==arguments[2]?arguments[2]:null;for(name in function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),r=void 0,(n="props")in(t=this)?Object.defineProperty(t,n,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[n]=r,this.props=o,i)this[name]=i[name];a&&this.init(a)}var t,n,o;return t=e,(n=[{key:"init",value:function(e){(e=e.bind(this))()}},{key:"renderText",value:function(e,t){document.querySelector(e).innerText=t}},{key:"renderHtml",value:function(e,t){document.querySelector(e).innerHTML=t}}])&&r(t.prototype,n),o&&r(t,o),e}();n.default=o},{}],"Editor.js":[function(e,t,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=void 0;var r,o=(r=e("./Rapyd"))&&r.__esModule?r:{default:r};function i(e){return(i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function a(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function c(e,t){return(c=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}function u(e){var t=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],function(){})),!0}catch(e){return!1}}();return function(){var n,r=s(e);if(t){var o=s(this).constructor;n=Reflect.construct(r,arguments,o)}else n=r.apply(this,arguments);return function(e,t){if(t&&("object"===i(t)||"function"==typeof t))return t;return l(e)}(this,n)}}function l(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function s(e){return(s=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}var f=function(e){!function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&c(e,t)}(s,o.default);var t,n,r,i=u(s);function s(e){var t,n,r,o;return function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,s),t=i.call(this),n=l(t),o=void 0,(r="target")in n?Object.defineProperty(n,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):n[r]=o,t.target=e,t.init(),t}return t=s,(n=[{key:"calcNumbers",value:function(){var e=document.getElementById("".concat(this.target,"_editor")).value.split("\n"),t=[];e.length<10&&(e.length=10);for(var n=0;n<e.length;n++)t.push("<p>".concat(n+1,"</p>"));document.getElementById("".concat(this.target,"_numbers")).innerHTML=t.join("")}},{key:"SetBody",value:function(e){this.renderHtml("#".concat(this.target,"_display"),e),this.calcNumbers()}},{key:"init",value:function(){var e='\n                    <div id="'.concat(this.target,'_display" class="flex-1 ml-4"></div>\n                      <div id="').concat(this.target,'_wrapper" class="flex-1 relative flex bg-grene-600 text-sm border border-gray-800 shdaow leading-loose">\n                        <div id="').concat(this.target,'_numbers" class="p-2 text-center bg-gray-100 border-r border-gray-800">\n                      </div>\n                      <textarea id="').concat(this.target,'_editor" class="flex-1 p-2 outline-none"></textarea>\n                    </div>');this.renderHtml("#".concat(this.target),e),this.calcNumbers();var t=document.getElementById("".concat(this.target,"_editor"));t.addEventListener("keydown",function(e){if("Tab"==e.key){e.preventDefault();var t=e.target.selectionStart,n=e.target.selectionEnd;e.target.value=e.target.value.substring(0,t)+"\t"+e.target.value.substring(n),e.target.selectionStart=e.target.selectionEnd=t+1}}),t.addEventListener("keyup",function(e){this.SetBody(e.target.value)}.bind(this)),this.SetBody(t.value)}}])&&a(t.prototype,n),r&&a(t,r),s}();n.default=f},{"./Rapyd":"Rapyd.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(e,t,n){var r,o,i=arguments[3],a="__parcel__error__overlay__",c=t.bundle.Module;t.bundle.Module=function(e){c.call(this,e),this.hot={data:t.bundle.hotData,_acceptCallbacks:[],_disposeCallbacks:[],accept:function(e){this._acceptCallbacks.push(e||function(){})},dispose:function(e){this._disposeCallbacks.push(e)}},t.bundle.hotData=null};var u=t.bundle.parent;if(!(u&&u.isParcelRequire||"undefined"==typeof WebSocket)){var l=location.hostname,s="https:"===location.protocol?"wss":"ws",f=new WebSocket(s+"://"+l+":60015/");f.onmessage=function(e){r={},o=[];var t=JSON.parse(e.data);if("update"===t.type){var n=!1;t.assets.forEach(function(e){e.isNew||function e(t,n){var a=t.modules;if(!a)return;if(!a[n]&&t.parent)return e(t.parent,n);if(r[n])return;r[n]=!0;var c=t.cache[n];o.push([t,n]);if(c&&c.hot&&c.hot._acceptCallbacks.length)return!0;return function e(t,n){var r=t.modules;if(!r)return[];var o=[];var i,a,c;for(i in r)for(a in r[i][1])((c=r[i][1][a])===n||Array.isArray(c)&&c[c.length-1]===n)&&o.push(i);t.parent&&(o=o.concat(e(t.parent,n)));return o}(i.parcelRequire,n).some(function(t){return e(i.parcelRequire,t)})}(i.parcelRequire,e.id)&&(n=!0)}),(n=n||t.assets.every(function(e){return"css"===e.type&&e.generated.js}))?(console.clear(),t.assets.forEach(function(e){!function e(t,n){var r=t.modules;if(!r)return;if(r[n.id]||!t.parent){var o=new Function("require","module","exports",n.generated.js);n.isNew=!r[n.id],r[n.id]=[o,n.deps]}else t.parent&&e(t.parent,n)}(i.parcelRequire,e)}),o.forEach(function(e){!function(e,t){var n=e.cache[t];e.hotData={},n&&(n.hot.data=e.hotData);n&&n.hot&&n.hot._disposeCallbacks.length&&n.hot._disposeCallbacks.forEach(function(t){t(e.hotData)});if(delete e.cache[t],e(t),(n=e.cache[t])&&n.hot&&n.hot._acceptCallbacks.length)n.hot._acceptCallbacks.forEach(function(e){e()})}(e[0],e[1])})):location.reload&&location.reload()}if("reload"===t.type&&(f.close(),f.onclose=function(){location.reload()}),"error-resolved"===t.type&&(console.log("[parcel] ✨ Error resolved"),d()),"error"===t.type){console.error("[parcel] 🚨  "+t.error.message+"\n"+t.error.stack),d();var c=function(e){var t=document.createElement("div");t.id=a;var n=document.createElement("div"),r=document.createElement("pre");return n.innerText=e.error.message,r.innerText=e.error.stack,t.innerHTML='<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;"><span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span><span style="top: 2px; margin-left: 5px; position: relative;">🚨</span><div style="font-size: 18px; font-weight: bold; margin-top: 20px;">'+n.innerHTML+"</div><pre>"+r.innerHTML+"</pre></div>",t}(t);document.body.appendChild(c)}}}function d(){var e=document.getElementById(a);e&&e.remove()}},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","Editor.js"]);
-},{}]},{},["pCsm"], null)
+var OVERLAY_ID = '__parcel__error__overlay__';
+var OldModule = module.bundle.Module;
+
+function Module(moduleName) {
+  OldModule.call(this, moduleName);
+  this.hot = {
+    data: module.bundle.hotData,
+    _acceptCallbacks: [],
+    _disposeCallbacks: [],
+    accept: function (fn) {
+      this._acceptCallbacks.push(fn || function () {});
+    },
+    dispose: function (fn) {
+      this._disposeCallbacks.push(fn);
+    }
+  };
+  module.bundle.hotData = null;
+}
+
+module.bundle.Module = Module;
+var checkedAssets, assetsToAccept;
+var parent = module.bundle.parent;
+
+if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
+  var hostname = "" || location.hostname;
+  var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63459" + '/');
+
+  ws.onmessage = function (event) {
+    checkedAssets = {};
+    assetsToAccept = [];
+    var data = JSON.parse(event.data);
+
+    if (data.type === 'update') {
+      var handled = false;
+      data.assets.forEach(function (asset) {
+        if (!asset.isNew) {
+          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
+
+          if (didAccept) {
+            handled = true;
+          }
+        }
+      }); // Enable HMR for CSS by default.
+
+      handled = handled || data.assets.every(function (asset) {
+        return asset.type === 'css' && asset.generated.js;
+      });
+
+      if (handled) {
+        console.clear();
+        data.assets.forEach(function (asset) {
+          hmrApply(global.parcelRequire, asset);
+        });
+        assetsToAccept.forEach(function (v) {
+          hmrAcceptRun(v[0], v[1]);
+        });
+      } else if (location.reload) {
+        // `location` global exists in a web worker context but lacks `.reload()` function.
+        location.reload();
+      }
+    }
+
+    if (data.type === 'reload') {
+      ws.close();
+
+      ws.onclose = function () {
+        location.reload();
+      };
+    }
+
+    if (data.type === 'error-resolved') {
+      console.log('[parcel] ✨ Error resolved');
+      removeErrorOverlay();
+    }
+
+    if (data.type === 'error') {
+      console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
+      removeErrorOverlay();
+      var overlay = createErrorOverlay(data);
+      document.body.appendChild(overlay);
+    }
+  };
+}
+
+function removeErrorOverlay() {
+  var overlay = document.getElementById(OVERLAY_ID);
+
+  if (overlay) {
+    overlay.remove();
+  }
+}
+
+function createErrorOverlay(data) {
+  var overlay = document.createElement('div');
+  overlay.id = OVERLAY_ID; // html encode message and stack trace
+
+  var message = document.createElement('div');
+  var stackTrace = document.createElement('pre');
+  message.innerText = data.error.message;
+  stackTrace.innerText = data.error.stack;
+  overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
+  return overlay;
+}
+
+function getParents(bundle, id) {
+  var modules = bundle.modules;
+
+  if (!modules) {
+    return [];
+  }
+
+  var parents = [];
+  var k, d, dep;
+
+  for (k in modules) {
+    for (d in modules[k][1]) {
+      dep = modules[k][1][d];
+
+      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
+        parents.push(k);
+      }
+    }
+  }
+
+  if (bundle.parent) {
+    parents = parents.concat(getParents(bundle.parent, id));
+  }
+
+  return parents;
+}
+
+function hmrApply(bundle, asset) {
+  var modules = bundle.modules;
+
+  if (!modules) {
+    return;
+  }
+
+  if (modules[asset.id] || !bundle.parent) {
+    var fn = new Function('require', 'module', 'exports', asset.generated.js);
+    asset.isNew = !modules[asset.id];
+    modules[asset.id] = [fn, asset.deps];
+  } else if (bundle.parent) {
+    hmrApply(bundle.parent, asset);
+  }
+}
+
+function hmrAcceptCheck(bundle, id) {
+  var modules = bundle.modules;
+
+  if (!modules) {
+    return;
+  }
+
+  if (!modules[id] && bundle.parent) {
+    return hmrAcceptCheck(bundle.parent, id);
+  }
+
+  if (checkedAssets[id]) {
+    return;
+  }
+
+  checkedAssets[id] = true;
+  var cached = bundle.cache[id];
+  assetsToAccept.push([bundle, id]);
+
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    return true;
+  }
+
+  return getParents(global.parcelRequire, id).some(function (id) {
+    return hmrAcceptCheck(global.parcelRequire, id);
+  });
+}
+
+function hmrAcceptRun(bundle, id) {
+  var cached = bundle.cache[id];
+  bundle.hotData = {};
+
+  if (cached) {
+    cached.hot.data = bundle.hotData;
+  }
+
+  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
+    cached.hot._disposeCallbacks.forEach(function (cb) {
+      cb(bundle.hotData);
+    });
+  }
+
+  delete bundle.cache[id];
+  bundle(id);
+  cached = bundle.cache[id];
+
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    cached.hot._acceptCallbacks.forEach(function (cb) {
+      cb();
+    });
+
+    return true;
+  }
+}
+},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","Editor.js"], null)
 //# sourceMappingURL=/Editor.js.map
