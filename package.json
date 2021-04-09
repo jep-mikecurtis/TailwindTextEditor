@@ -1,6 +1,6 @@
 {
   "name": "tailwindtexteditor",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "This package is a tailwind text editor",
   "main": "dist/Editor.js",
   "scripts": {
