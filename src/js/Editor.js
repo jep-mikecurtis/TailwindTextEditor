@@ -96,5 +96,4 @@ class Editor extends Rapyd {
   }
 }
 
-new Editor("app");
 export default Editor;
