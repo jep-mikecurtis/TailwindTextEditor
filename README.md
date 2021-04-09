@@ -13,7 +13,7 @@ Install
 In Your HTML
 
 ```
-<div id="editor" data-value="<p class='text-2xl'>Initial Value</p>"></div>
+<div id="editor">Initial Value</p>"></div>
 ```
 
 With Initial Value
