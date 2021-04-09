@@ -13,7 +13,7 @@ Install
 In Your HTML
 
 ```
-<div id="editor">Initial Value</p>"></div>
+<div id="editor"></div>
 ```
 
 With Initial Value
