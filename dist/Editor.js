@@ -185,8 +185,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  mainContent: function mainContent() {
-    return "\n        <div class=\"px-4 py-10\">\n          ".concat(this.toolTip(), "\n          <div class=\"flex flex-row-reverse\">\n            <div id=\"").concat(this.target, "_display\" class=\"flex-1 ml-4\"></div>\n              <div id=\"").concat(this.target, "_wrapper\" class=\"flex-1 relative flex text-xs border border-gray-800 rounded overflow-hidden shadow leading-loose\">\n                <div id=\"").concat(this.target, "_numbers\" class=\"p-2 text-center bg-gray-100 border-r-2 border-blue-400 bg-gray-800 text-white\">\n              </div>\n\n              <textarea id=\"").concat(this.target, "_editor\" class=\"flex-1 p-2 outline-none resize-none\"></textarea>\n            </div>\n          </div>\n        </div>\n      ");
+  mainContent: function mainContent(initValue) {
+    return "\n        <div class=\"px-4 py-10\">\n          ".concat(this.toolTip(), "\n          <div class=\"flex flex-row-reverse\">\n            <div id=\"").concat(this.target, "_display\" class=\"flex-1 ml-4\"></div>\n              <div id=\"").concat(this.target, "_wrapper\" class=\"flex-1 relative flex text-xs border border-gray-800 rounded overflow-hidden shadow leading-loose\">\n                <div id=\"").concat(this.target, "_numbers\" class=\"p-2 text-center bg-gray-100 border-r-2 border-blue-400 bg-gray-800 text-white\">\n              </div>\n\n              <textarea id=\"").concat(this.target, "_editor\" class=\"flex-1 p-2 outline-none resize-none\">").concat(initValue, "</textarea>\n            </div>\n          </div>\n        </div>\n      ");
   },
   toolTip: function toolTip() {
     return "\n        <div class=\"mb-4 flex space-x-2\">\n          <div id=\"heading-dropdown\" class=\"relative\">\n            <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow toggle\" data-toggle=\"toggleHeading\">H</button>\n            <div class=\"hidden absolute z-20 p-4 bg-white flex flex-col space-y-4 mt-2 shadow border border-gray-300 rounded\" id=\"toggleHeading\">\n              <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ".concat(this.target, "_tooltip toggle\" data-toggle=\"toggleHeading\" data-tag=\"h1\" @click=\"show=false\">H1</button>\n              <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip toggle\" data-toggle=\"toggleHeading\" data-tag=\"h2\" @click=\"show=false\">H2</button>\n              <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip toggle\" data-toggle=\"toggleHeading\" data-tag=\"h3\" @click=\"show=false\">H3</button>\n            </div>\n          </div>\n          <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip\" data-tag=\"p\">p</button>\n          <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip\" data-tag=\"a\" data-class=\"text-blue-600\">a</button>\n          <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip\" data-tag=\"div\">div</button>\n          <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip\" data-tag=\"div\" data-class=\"flex\">flex</button>\n          <button class=\"border border-gray-600 py-1 px-3 text-sm rounded shadow ").concat(this.target, "_tooltip\" data-tag=\"button\" data-class=\"py-1 px-4 shadow rounded\">Button</button>\n        </div>\n      ");
@@ -306,6 +306,8 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 
     _defineProperty(_assertThisInitialized(_this), "editor", null);
 
+    _defineProperty(_assertThisInitialized(_this), "initValue", "");
+
     _this.target = target;
 
     _this.init();
@@ -366,7 +368,8 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
   }, {
     key: "init",
     value: function init() {
-      this.renderHtml("#".concat(this.target), this.mainContent());
+      var initValue = document.getElementById(this.target).dataset.value;
+      this.renderHtml("#".concat(this.target), this.mainContent(initValue));
       this.calcNumbers();
       this.tooltip();
       this.editor = document.getElementById("".concat(this.target, "_editor"));
@@ -379,6 +382,7 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
   return Editor;
 }(_Rapyd2.default);
 
+new Editor("app");
 var _default = Editor;
 exports.default = _default;
 },{"./Rapyd":"Rapyd.js","./html/html":"html/html.js","./helpers/tooltip":"helpers/tooltip.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

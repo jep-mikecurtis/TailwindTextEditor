@@ -1,5 +1,5 @@
 export default {
-  mainContent() {
+  mainContent(initValue) {
     return `
         <div class="px-4 py-10">
           ${this.toolTip()}
@@ -15,7 +15,7 @@ export default {
 
               <textarea id="${
                 this.target
-              }_editor" class="flex-1 p-2 outline-none resize-none"></textarea>
+              }_editor" class="flex-1 p-2 outline-none resize-none">${initValue}</textarea>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import tooltip from "./helpers/tooltip";
 class Editor extends Rapyd {
   target;
   editor = null;
+  initValue = "";
 
   constructor(target) {
     super({}, { ...mainContent, ...tooltip });
@@ -77,7 +78,9 @@ class Editor extends Rapyd {
   }
 
   init() {
-    this.renderHtml(`#${this.target}`, this.mainContent());
+    const initValue = document.getElementById(this.target).dataset.value;
+
+    this.renderHtml(`#${this.target}`, this.mainContent(initValue));
 
     this.calcNumbers();
 
@@ -93,4 +96,5 @@ class Editor extends Rapyd {
   }
 }
 
+new Editor("app");
 export default Editor;
