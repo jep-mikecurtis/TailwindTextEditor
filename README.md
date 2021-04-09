@@ -13,7 +13,13 @@ Install
 In Your HTML
 
 ```
-<div class="px-4 py-10 flex flex-row-reverse" id="app"></div>
+<div id="editor" data-value="<p class='text-2xl'>Initial Value</p>"></div>
+```
+
+With Initial Value
+
+```
+<div id="editor" data-value="<p class='text-2xl'>Initial Value</p>"></div>
 ```
 
 In Your JS
@@ -21,5 +27,5 @@ In Your JS
 ```
 import Editor from 'tailwindtexteditor'
 
-new Editor("app");
+new Editor("editor");
 ```
