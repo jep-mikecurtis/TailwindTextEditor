@@ -15,7 +15,7 @@ export default {
 
               <textarea id="${
                 this.target
-              }_editor" class="flex-1 p-2 outline-none"></textarea>
+              }_editor" class="flex-1 p-2 outline-none resize-none"></textarea>
             </div>
           </div>
         </div>
@@ -24,12 +24,12 @@ export default {
   toolTip() {
     return `
         <div class="mb-4 flex space-x-2">
-          <div x-data="{show: false}" class="relative">
-            <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow" @click="show=!show">H</button>
-            <div x-show="show" class="absolute z-20 p-4 bg-white flex flex-col space-y-4 mt-2 shadow border border-gray-300 rounded">
-              <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip" data-tag="h1" @click="show=false">H1</button>
-              <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip" data-tag="h2" @click="show=false">H2</button>
-              <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip" data-tag="h3" @click="show=false">H3</button>
+          <div id="heading-dropdown" class="relative">
+            <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow toggle" data-toggle="toggleHeading">H</button>
+            <div class="hidden absolute z-20 p-4 bg-white flex flex-col space-y-4 mt-2 shadow border border-gray-300 rounded" id="toggleHeading">
+              <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip toggle" data-toggle="toggleHeading" data-tag="h1" @click="show=false">H1</button>
+              <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip toggle" data-toggle="toggleHeading" data-tag="h2" @click="show=false">H2</button>
+              <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip toggle" data-toggle="toggleHeading" data-tag="h3" @click="show=false">H3</button>
             </div>
           </div>
           <button class="border border-gray-600 py-1 px-3 text-sm rounded shadow ${this.target}_tooltip" data-tag="p">p</button>

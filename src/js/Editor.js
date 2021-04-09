@@ -1,4 +1,3 @@
-import "alpinejs";
 import Rapyd from "./Rapyd";
 import mainContent from "./html/html";
 import tooltip from "./helpers/tooltip";
@@ -53,8 +52,8 @@ class Editor extends Rapyd {
 
     let newContent = [];
 
-    if (content.length < 30) {
-      content.length = 30;
+    if (content.length < 40) {
+      content.length = 40;
     }
 
     for (let i = 0; i < content.length; i++) {
@@ -78,9 +77,7 @@ class Editor extends Rapyd {
   }
 
   init() {
-    const content = this.mainContent(this.target);
-
-    this.renderHtml(`#${this.target}`, content);
+    this.renderHtml(`#${this.target}`, this.mainContent());
 
     this.calcNumbers();
 
@@ -95,7 +92,5 @@ class Editor extends Rapyd {
     this.setBody(this.editor.value);
   }
 }
-
-new Editor("app");
 
 export default Editor;

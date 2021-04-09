@@ -9,6 +9,11 @@ export default {
         this.tooltipHandleTag(e.target.dataset.tag, e.target.dataset.class);
       })
     );
+
+    const toggles = document.querySelectorAll(".toggle");
+    toggles.forEach((el) => {
+      el.addEventListener("click", (e) => this.tooltipToggle(e));
+    });
   },
   tooltipHandleTag(tagTyp, tagClass) {
     let tag = "";
@@ -31,5 +36,12 @@ export default {
     }
 
     this.formatText();
+  },
+  tooltipToggle(e) {
+    const toggleEl = document.getElementById(e.target.dataset.toggle);
+
+    return toggleEl.classList.contains("hidden")
+      ? toggleEl.classList.remove("hidden")
+      : toggleEl.classList.add("hidden");
   },
 };
