@@ -1,6 +1,4 @@
 class Rapyd {
-  props;
-
   constructor(props = {}, methods = {}, init = null) {
     this.props = props;
 

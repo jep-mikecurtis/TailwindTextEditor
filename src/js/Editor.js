@@ -3,14 +3,12 @@ import mainContent from "./html/html";
 import tooltip from "./helpers/tooltip";
 
 class Editor extends Rapyd {
-  target;
-  editor = null;
-  initValue = "";
-
-  constructor(target) {
+  constructor(target = null) {
     super({}, { ...mainContent, ...tooltip });
 
     this.target = target;
+    this.editor = null;
+    this.initValue = '';
 
     this.init();
   }

@@ -4,13 +4,17 @@
   "description": "This package is a tailwind text editor",
   "main": "dist/Editor.js",
   "scripts": {
-    "dev": "parcel src/js/Editor.js",
-    "build": "parcel build dist/Editor.js"
+    "watch": "mix watch",
+    "prod": "npm run production",
+    "production": "mix"
   },
   "keywords": [],
   "author": "Michael Curtis",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "laravel-mix": "^6.0.16",
+    "postcss": "^8.2.10"
+  },
   "dependencies": {},
   "repository": {
     "type": "git",
