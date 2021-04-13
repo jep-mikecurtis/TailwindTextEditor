@@ -256,10 +256,15 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 
     _this = _super.call(this, {}, _objectSpread(_objectSpread({}, _html_html__WEBPACK_IMPORTED_MODULE_1__.default), _helpers_tooltip__WEBPACK_IMPORTED_MODULE_2__.default));
     _this.target = target;
+    _this.wrapper = document.getElementById(_this.target);
     _this.editor = null;
     _this.initValue = '';
 
-    _this.init();
+    if (_this.wrapper) {
+      _this.init();
+    } else {
+      console.error('Missing Editor Dom Element Cannot Initiate Class');
+    }
 
     return _this;
   }
@@ -292,8 +297,8 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
       var content = document.getElementById("".concat(this.target, "_editor")).value.split("\n");
       var newContent = [];
 
-      if (content.length < 40) {
-        content.length = 40;
+      if (content.length < this.startingLines) {
+        content.length = this.startingLines;
       }
 
       for (var i = 0; i < content.length; i++) {
@@ -317,9 +322,10 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
   }, {
     key: "init",
     value: function init() {
-      var _document$getElementB;
+      var _this$wrapper$dataset, _this$wrapper$dataset2;
 
-      var initValue = (_document$getElementB = document.getElementById(this.target).dataset.value) !== null && _document$getElementB !== void 0 ? _document$getElementB : '';
+      this.startingLines = (_this$wrapper$dataset = this.wrapper.dataset.lines) !== null && _this$wrapper$dataset !== void 0 ? _this$wrapper$dataset : 20;
+      var initValue = (_this$wrapper$dataset2 = this.wrapper.dataset.value) !== null && _this$wrapper$dataset2 !== void 0 ? _this$wrapper$dataset2 : '';
       this.renderHtml("#".concat(this.target), this.mainContent(initValue));
       this.calcNumbers();
       this.tooltip();
@@ -334,7 +340,6 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 }(_Rapyd__WEBPACK_IMPORTED_MODULE_0__.default);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Editor);
-new Editor('editor');
 })();
 
 /******/ })()

@@ -5,12 +5,16 @@ import tooltip from "./helpers/tooltip";
 class Editor extends Rapyd {
   constructor(target = null) {
     super({}, { ...mainContent, ...tooltip });
+    this.target     = target;
+    this.wrapper    = document.getElementById(this.target)
+    this.editor     = null;
+    this.initValue  = '';
 
-    this.target = target;
-    this.editor = null;
-    this.initValue = '';
-
-    this.init();
+    if(this.wrapper) {
+      this.init();
+    } else {
+      console.error('Missing Editor Dom Element Cannot Initiate Class')
+    }
   }
 
   allowTab() {
@@ -51,8 +55,8 @@ class Editor extends Rapyd {
 
     let newContent = [];
 
-    if (content.length < 40) {
-      content.length = 40;
+    if (content.length < this.startingLines) {
+      content.length = this.startingLines;
     }
 
     for (let i = 0; i < content.length; i++) {
@@ -76,7 +80,9 @@ class Editor extends Rapyd {
   }
 
   init() {
-    const initValue = document.getElementById(this.target).dataset.value ?? '';
+    this.startingLines  = this.wrapper.dataset.lines ?? 20;
+
+    const initValue     = this.wrapper.dataset.value ?? '';
 
     this.renderHtml(`#${this.target}`, this.mainContent(initValue));
 
@@ -95,5 +101,3 @@ class Editor extends Rapyd {
 }
 
 export default Editor;
-
-new Editor('editor')
