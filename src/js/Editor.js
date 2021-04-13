@@ -76,7 +76,7 @@ class Editor extends Rapyd {
   }
 
   init() {
-    const initValue = document.getElementById(this.target).dataset.value;
+    const initValue = document.getElementById(this.target).dataset.value ?? '';
 
     this.renderHtml(`#${this.target}`, this.mainContent(initValue));
 
@@ -95,3 +95,7 @@ class Editor extends Rapyd {
 }
 
 export default Editor;
+
+new Editor('editor')
+
+console.log('Hello');

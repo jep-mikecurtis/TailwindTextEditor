@@ -145,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -159,14 +159,14 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -179,12 +179,12 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -195,7 +195,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -317,7 +317,9 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
   }, {
     key: "init",
     value: function init() {
-      var initValue = document.getElementById(this.target).dataset.value;
+      var _document$getElementB;
+
+      var initValue = (_document$getElementB = document.getElementById(this.target).dataset.value) !== null && _document$getElementB !== void 0 ? _document$getElementB : '';
       this.renderHtml("#".concat(this.target), this.mainContent(initValue));
       this.calcNumbers();
       this.tooltip();
@@ -332,6 +334,8 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 }(_Rapyd__WEBPACK_IMPORTED_MODULE_0__.default);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Editor);
+new Editor('editor');
+console.log('Hello');
 })();
 
 /******/ })()
