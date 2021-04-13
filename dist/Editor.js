@@ -335,7 +335,6 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Editor);
 new Editor('editor');
-console.log('Hello');
 })();
 
 /******/ })()

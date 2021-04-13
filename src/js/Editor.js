@@ -97,5 +97,3 @@ class Editor extends Rapyd {
 export default Editor;
 
 new Editor('editor')
-
-console.log('Hello');
