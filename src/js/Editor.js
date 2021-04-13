@@ -101,3 +101,5 @@ class Editor extends Rapyd {
 }
 
 export default Editor;
+
+window.TwTextEditor = Editor;

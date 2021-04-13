@@ -340,6 +340,7 @@ var Editor = /*#__PURE__*/function (_Rapyd) {
 }(_Rapyd__WEBPACK_IMPORTED_MODULE_0__.default);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Editor);
+window.TwTextEditor = Editor;
 })();
 
 /******/ })()
